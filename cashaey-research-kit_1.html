@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cashaey · Research Foundation · Week 1</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2d6a4f;
+    --green-light: #40916c;
+    --green-pale: #d8f3dc;
+    --green-faint: #f0faf2;
+    --ink: #1a1a18;
+    --ink-mid: #3d3d3a;
+    --ink-soft: #6b6b67;
+    --ink-faint: #9e9e9a;
+    --rule: #e4e4e0;
+    --bg: #fafaf8;
+    --white: #ffffff;
+    --amber: #e9c46a;
+    --coral: #e76f51;
+    --tag-bg: #eef7f0;
+    --tag-text: #2d6a4f;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--green);
+    color: white;
+    padding: 3rem 2.5rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 28px,
+      rgba(255,255,255,0.03) 28px,
+      rgba(255,255,255,0.03) 29px
+    );
+  }
+  .header-inner { position: relative; max-width: 860px; margin: 0 auto; }
+  .week-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.6rem;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  header h1 em {
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+  .header-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 2.5rem;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 0.9rem 1.2rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+  .nav-tab:hover { color: var(--ink); }
+  .nav-tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+  /* ── MAIN ── */
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .day-badge {
+    background: var(--green);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .section-header p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 0.35rem;
+    line-height: 1.6;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .card-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--green-pale);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .card h3 span {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 12px;
+    margin-left: 0.4rem;
+  }
+
+  /* ── QUESTIONS ── */
+  .q-group { margin-bottom: 1.75rem; }
+  .q-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .q-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: flex-start;
+  }
+  .q-item:last-child { border-bottom: none; }
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green-light);
+    min-width: 22px;
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+  .q-text {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .q-note {
+    font-size: 11px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 3px;
+  }
+  .q-tag {
+    font-size: 10px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    border-radius: 4px;
+    padding: 2px 7px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── INTERVIEW GUIDE ── */
+  .guide-block {
+    background: var(--green-faint);
+    border-left: 3px solid var(--green-light);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .guide-block-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+  .guide-block p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .guide-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .guide-block ul li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    padding: 0.25rem 0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .guide-block ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--green-light);
+    font-weight: 700;
+  }
+
+  /* ── CONTACT TABLE ── */
+  .orgs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 600px) { .orgs-grid { grid-template-columns: 1fr; } }
+  .org-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .org-card-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.35rem;
+  }
+  .org-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .org-card p {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .org-fit {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 10.5px;
+    font-family: 'DM Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .fit-high { background: var(--green-pale); color: var(--green); }
+  .fit-med  { background: #fef3c7; color: #92400e; }
+
+  .contact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 0.5rem;
+  }
+  .contact-table th {
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .contact-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-mid);
+    vertical-align: top;
+  }
+  .contact-table tr:last-child td { border-bottom: none; }
+  .contact-table tr:hover td { background: var(--green-faint); }
+  .status-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  .dot-todo { background: #d1d5db; }
+  .dot-ready { background: var(--green-light); }
+  .dot-sent  { background: var(--amber); }
+
+  /* ── OUTREACH ── */
+  .template-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  .template-meta {
+    background: var(--green-faint);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .template-meta-left {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green);
+  }
+  .template-meta-right {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--ink-faint);
+  }
+  .template-field {
+    padding: 0.6rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  .field-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    min-width: 50px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .field-value {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .template-body {
+    padding: 1.25rem;
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    white-space: pre-wrap;
+  }
+  .template-var {
+    background: #fef3c7;
+    color: #92400e;
+    border-radius: 3px;
+    padding: 0 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* ── TIPS ── */
+  .tip-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .tip-num {
+    background: var(--green);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tip-text {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .tip-text strong { color: var(--ink); font-weight: 600; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 1.75rem 0;
+  }
+
+  /* ── COPY BTN ── */
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--green);
+    background: none;
+    border: 1px solid var(--green-pale);
+    border-radius: 5px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover { background: var(--green-faint); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    font-family: 'DM Mono', monospace;
+    border-top: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="week-label">Cashaey · User Research Program</div>
+    <h1>Research Foundation<br><em>Week 1 · Jun 15–19</em></h1>
+    <div class="header-meta">
+      <span class="meta-pill">TUE Jun 17 · Research Questions + Interview Plan</span>
+      <span class="meta-pill">THU Jun 19 · Target Mapping + Contact List</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="show('rq')">① Research Questions</button>
+    <button class="nav-tab" onclick="show('guide')">② Interview Guide</button>
+    <button class="nav-tab" onclick="show('targets')">③ Target Orgs</button>
+    <button class="nav-tab" onclick="show('outreach')">④ Outreach Templates</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     TAB 1 · RESEARCH QUESTIONS
+═══════════════════════════════════════ -->
+<section class="section active" id="rq">
+  <div class="section-header">
+    <div class="day-badge">TUE · Jun 17</div>
+    <div>
+      <h2>Research Questions</h2>
+      <p>Core questions that will guide every interview, observation session, and synthesis decision. Organized by theme.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">
+      <div class="card-icon">🎯</div>
+      <h3>Research Goal <span>— what we need to learn by end of Week 1</span></h3>
+    </div>
+    <p style="font-size: 13.5px; color: var(--ink-mid); line-height: 1.7;">Understand how sorority chapters and student organizations currently manage <strong>money, shared resources, and informal trading</strong> — so we can evaluate whether Cashaey's community marketplace model fits naturally into their existing behavior, and identify which features matter most for a first launch.</p>
+  </div>
+
+  <!-- GROUP 1 -->
+  <div class="q-group">
+    <div class="q-group-title">Theme 1 · Current money & resource behavior</div>
+    <div class="q-item">
+      <div class="q-num">Q1</div>
+      <div class="q-text">
+        How does your chapter currently handle shared expenses — dues, event costs, supplies? What tools or systems do you use?
+        <div class="q-note">Looking for: Venmo chains, spreadsheets, chapter treasurer pain points</div>
+      </div>
+      <div class="q-tag">discovery</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q2</div>
+      <div class="q-text">
+        Think about the last time someone in your org needed something (a dress, a skill, a favor) and got it from another member instead of buying it. How did that happen?
+        <div class="q-note">Looking for: informal trading moments that already exist — Cashaey formalizes these</div>
+      </div>
+      <div class="q-tag">behavior</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q3</div>
+      <div class="q-text">
+        Have you ever felt like you couldn't participate in an event or activity because of cost? How did others handle that?
+        <div class="q-note">Looking for: financial exclusion within groups — the core problem Cashaey solves</div>
+      </div>
+      <div class="q-tag">pain point</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q4</div>
+      <div class="q-text">
+        What happens to items after big events — formal wear, decorations, props? Where do they go?
+        <div class="q-note">Looking for: idle inventory and secondhand habits within orgs</div>
+      </div>
+      <div class="q-tag">behavior</div>
+    </div>
+  </div>
+
+  <!-- GROUP 2 -->
+  <div class="q-group">
+    <div class="q-group-title">Theme 2 · Trust & community dynamics</div>
+    <div class="q-item">
+      <div class="q-num">Q5</div>
+      <div class="q-text">
+        How comfortable are you buying or trading something from a sorority sister vs. a stranger on Facebook Marketplace or Depop?
+        <div class="q-note">Looking for: trust differential inside communities — Cashaey's core advantage</div>
+      </div>
+      <div class="q-tag">trust</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q6</div>
+      <div class="q-text">
+        Have you ever lent money or covered costs for a member? Was it awkward to ask for it back? How was it resolved?
+        <div class="q-note">Looking for: social friction around money in tight-knit groups</div>
+      </div>
+      <div class="q-tag">trust</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q7</div>
+      <div class="q-text">
+        If your chapter had its own internal currency or credit system, how would you feel about that? What would make you trust it — or not?
+        <div class="q-note">Directly testing receptivity to Community Dollars concept</div>
+      </div>
+      <div class="q-tag">concept test</div>
+    </div>
+  </div>
+
+  <!-- GROUP 3 -->
+  <div class="q-group">
+    <div class="q-group-title">Theme 3 · Tech & adoption</div>
+    <div class="q-item">
+      <div class="q-num">Q8</div>
+      <div class="q-text">
+        What apps does your chapter use regularly for organizing, communicating, or paying each other? What do you wish worked better?
+        <div class="q-note">Looking for: existing tools, gaps, and switching triggers</div>
+      </div>
+      <div class="q-tag">competitive</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q9</div>
+      <div class="q-text">
+        When was the last time you downloaded a new app because someone in your social circle told you to? What made you actually use it?
+        <div class="q-note">Understanding peer adoption patterns — key for Cashaey's network-effect growth</div>
+      </div>
+      <div class="q-tag">adoption</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q10</div>
+      <div class="q-text">
+        If an exec officer or chapter president told everyone to use a new platform for trading and sharing within the chapter, would you? What would you need to feel comfortable using it?
+        <div class="q-note">Testing top-down adoption model — community owner = exec officer</div>
+      </div>
+      <div class="q-tag">adoption</div>
+    </div>
+  </div>
+
+  <!-- GROUP 4 -->
+  <div class="q-group">
+    <div class="q-group-title">Theme 4 · Org leadership (for exec officer interviews)</div>
+    <div class="q-item">
+      <div class="q-num">Q11</div>
+      <div class="q-text">
+        What's your biggest operational headache as an officer — the thing that takes the most time or causes the most friction?
+        <div class="q-note">Looking for treasurer/admin pain points that align with Cashaey's owner tools</div>
+      </div>
+      <div class="q-tag">leadership</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q12</div>
+      <div class="q-text">
+        If you could run a marketplace inside your chapter — where members list things they have, things they need, and trade — what would worry you about it? What would excite you?
+        <div class="q-note">Direct concept pitch reaction — use only after rapport is established</div>
+      </div>
+      <div class="q-tag">concept test</div>
+    </div>
+    <div class="q-item">
+      <div class="q-num">Q13</div>
+      <div class="q-text">
+        How do you currently handle situations where a member can't afford dues or event costs? Is there a formal process or is it informal?
+        <div class="q-note">Credit line / financial inclusion angle</div>
+      </div>
+      <div class="q-tag">leadership</div>
+    </div>
+  </div>
+
+  <div class="card" style="background: var(--green-faint); border-color: var(--green-pale);">
+    <div class="card-header">
+      <div class="card-icon">📌</div>
+      <h3>Research Questions to Answer by Week 2</h3>
+    </div>
+    <div class="two-col">
+      <div>
+        <p style="font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem;">Primary</p>
+        <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.8;">
+          <li>· Do informal trades already happen inside sororities?</li>
+          <li>· Is trust within a chapter meaningfully higher than with strangers?</li>
+          <li>· Would members accept an internal credit system?</li>
+          <li>· Would an exec officer adopt Cashaey as a chapter tool?</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size: 12px; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem;">Secondary</p>
+        <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.8;">
+          <li>· What categories of goods/services trade most?</li>
+          <li>· What's the deal-breaker for adoption?</li>
+          <li>· Who needs to say yes for others to follow?</li>
+          <li>· How does Cashaey fit alongside existing tools?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     TAB 2 · INTERVIEW GUIDE
+═══════════════════════════════════════ -->
+<section class="section" id="guide">
+  <div class="section-header">
+    <div class="day-badge">TUE · Jun 17</div>
+    <div>
+      <h2>Interview Approach & Guide</h2>
+      <p>Structure, timing, rapport-building, and facilitation notes for 45-minute sessions.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-header"><div class="card-icon">👤</div><h3>Participant profiles</h3></div>
+      <ul style="list-style: none; font-size: 13px; color: var(--ink-mid); line-height: 2;">
+        <li>· <strong>5–8 members</strong> (general members first)</li>
+        <li>· <strong>3–5 exec officers</strong> (treasurer, president, VP)</li>
+        <li>· Mix of chapter sizes: small (&lt;30), medium (30–80), large (80+)</li>
+        <li>· At least 2 non-sorority student orgs</li>
+        <li>· All currently enrolled undergrads</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon">⏱</div><h3>Session format</h3></div>
+      <ul style="list-style: none; font-size: 13px; color: var(--ink-mid); line-height: 2;">
+        <li>· <strong>45 min</strong> per session (60 min for officers)</li>
+        <li>· Video call (Zoom / Google Meet)</li>
+        <li>· Record with consent — transcript for synthesis</li>
+        <li>· 1 interviewer + optional note-taker</li>
+        <li>· $15–25 gift card incentive</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="guide-block">
+    <div class="guide-block-label">Opening · min 0–5</div>
+    <p>Thank them for their time. State what this is: "We're exploring how communities like yours manage money and resources, and whether certain tools could help. There are no right or wrong answers — we're not testing you, we're learning from you." Ask permission to record. Start recording.</p>
+  </div>
+
+  <div class="guide-block">
+    <div class="guide-block-label">Warm-up · min 5–10 · build rapport, no pressure</div>
+    <ul>
+      <li>"Tell me a bit about your chapter — how long you've been a member, what role you play."</li>
+      <li>"What's the best thing about being in [org name]?"</li>
+      <li>"How does your chapter stay organized day-to-day?" (casual, not loaded)</li>
+    </ul>
+  </div>
+
+  <div class="guide-block">
+    <div class="guide-block-label">Core exploration · min 10–35 · use questions from Q1–Q10</div>
+    <ul>
+      <li>Don't read questions robotically — use them as a conversation map.</li>
+      <li>Always follow "what happened?" with "how did that make you feel?" and "what would have made that easier?"</li>
+      <li>If they mention Venmo, Cash App, or GroupMe — go deeper. "What do you use it for specifically? What breaks down?"</li>
+      <li>Listen for the word <em>"awkward"</em> — it's a signal for a Cashaey use case.</li>
+      <li>For officers: shift to Q11–Q13 during this block.</li>
+    </ul>
+  </div>
+
+  <div class="guide-block">
+    <div class="guide-block-label">Concept reaction · min 35–43 · introduce Cashaey lightly</div>
+    <ul>
+      <li>"Imagine an app where your chapter had its own private marketplace — you could list things you have, ask for things you need, and use a credit system within the group. What's your gut reaction?"</li>
+      <li>Don't pitch. Don't defend. Listen and probe: "What specifically concerns you?" / "Who would need to be on it for you to use it?"</li>
+      <li>If they ask what company this is for: be honest — "We're from Cashaey, we're doing early research."</li>
+    </ul>
+  </div>
+
+  <div class="guide-block">
+    <div class="guide-block-label">Close · min 43–45</div>
+    <ul>
+      <li>"Is there anything I didn't ask about that feels relevant to how your chapter handles money or resources?"</li>
+      <li>"Who else in your chapter should I talk to? Could you connect us?"</li>
+      <li>Thank them. Send gift card within 24 hours.</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <div class="card">
+    <div class="card-header"><div class="card-icon">🚫</div><h3>Anti-patterns to avoid</h3></div>
+    <div class="two-col">
+      <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.9;">
+        <li>❌ Leading questions ("Wouldn't it be great if…")</li>
+        <li>❌ Pitching or explaining features mid-interview</li>
+        <li>❌ Moving on before a silence fills itself</li>
+        <li>❌ Asking about hypotheticals before behavior</li>
+      </ul>
+      <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.9;">
+        <li>✅ "Tell me more about that."</li>
+        <li>✅ "What happened next?"</li>
+        <li>✅ "Can you walk me through the last time that happened?"</li>
+        <li>✅ Comfortable silence (count to 5 before speaking)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     TAB 3 · TARGET ORG MAP
+═══════════════════════════════════════ -->
+<section class="section" id="targets">
+  <div class="section-header">
+    <div class="day-badge">THU · Jun 19</div>
+    <div>
+      <h2>Target Org Mapping</h2>
+      <p>Chapters and organizations to prioritize, their Cashaey fit, and how to get in the door.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header"><div class="card-icon">🎯</div><h3>Why sororities first</h3></div>
+    <p style="font-size: 13.5px; color: var(--ink-mid); line-height: 1.7;">Sorority chapters are the ideal v1 community for Cashaey: they have a built-in trust network, a natural power structure (community owner = exec officers), recurring shared expenses (dues, formals, philanthropy), idle inventory (formal wear, décor), and strong peer adoption dynamics. They're also large enough for a marketplace to work but small enough to feel safe.</p>
+  </div>
+
+  <div class="q-group-title" style="margin-bottom: 1rem;">Tier 1 · Highest fit — target first</div>
+  <div class="orgs-grid">
+    <div class="org-card">
+      <div class="org-card-type">NPC Panhellenic</div>
+      <h4>Sorority chapters at large state universities</h4>
+      <p>High dues, active formals calendar, 50–200 members. Strong exec structure. Treasurer role maps perfectly to community owner.</p>
+      <span class="org-fit fit-high">Fit: Very High</span>
+    </div>
+    <div class="org-card">
+      <div class="org-card-type">NPHC / Multicultural Greek</div>
+      <h4>BGLO sororities & multicultural chapters</h4>
+      <p>Community-first values, strong mutual aid tradition, often more financially diverse membership — Cashaey's credit concept resonates deeply here.</p>
+      <span class="org-fit fit-high">Fit: Very High</span>
+    </div>
+    <div class="org-card">
+      <div class="org-card-type">Student Org</div>
+      <h4>Pre-professional clubs (business, pre-law, pre-med)</h4>
+      <p>Regular dues, conference costs, shared resources (interview suits, MCAT books). Members are analytically motivated — respond to structured tools.</p>
+      <span class="org-fit fit-high">Fit: High</span>
+    </div>
+    <div class="org-card">
+      <div class="org-card-type">Student Org</div>
+      <h4>Cultural & international student orgs</h4>
+      <p>Strong in-group trust, shared event costs (cultural shows, food), and often price-sensitive. Barter/trade is culturally familiar in many communities.</p>
+      <span class="org-fit fit-high">Fit: High</span>
+    </div>
+  </div>
+
+  <div class="q-group-title" style="margin-bottom: 1rem;">Tier 2 · Good fit — secondary targets</div>
+  <div class="orgs-grid">
+    <div class="org-card">
+      <div class="org-card-type">Student Org</div>
+      <h4>Athletics / club sports</h4>
+      <p>Shared equipment, travel costs, team gear. High trust. Smaller orgs may lack scale for a marketplace.</p>
+      <span class="org-fit fit-med">Fit: Medium</span>
+    </div>
+    <div class="org-card">
+      <div class="org-card-type">Student Org</div>
+      <h4>Arts / performance groups</h4>
+      <p>Costume sharing, instrument loans, event supply trades. Creative community — may be early adopters if UI is appealing.</p>
+      <span class="org-fit fit-med">Fit: Medium</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="q-group-title" style="margin-bottom: 0.75rem;">Initial contact list template</div>
+  <p style="font-size: 12.5px; color: var(--ink-soft); margin-bottom: 1rem;">Fill in as chapters are mapped Thursday. Target: 20 orgs across 3–5 universities in first pass.</p>
+
+  <div style="overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; background: var(--white);">
+    <table class="contact-table">
+      <thead>
+        <tr>
+          <th>Org name</th>
+          <th>University</th>
+          <th>Type</th>
+          <th>Contact / role</th>
+          <th>Channel</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Alpha Delta Pi — Beta Mu</strong></td>
+          <td>Ohio State</td>
+          <td>NPC Sorority</td>
+          <td>Chapter President (find via chapter website)</td>
+          <td>Instagram DM → Email</td>
+          <td><span class="status-dot dot-todo"></span>To research</td>
+        </tr>
+        <tr>
+          <td><strong>Delta Sigma Theta — local chapter</strong></td>
+          <td>Howard / HBCU TBD</td>
+          <td>NPHC Sorority</td>
+          <td>Treasurer or VP Programs</td>
+          <td>LinkedIn → Email</td>
+          <td><span class="status-dot dot-todo"></span>To research</td>
+        </tr>
+        <tr>
+          <td><strong>National Society of Black Engineers</strong></td>
+          <td>Michigan / Purdue</td>
+          <td>Pre-professional</td>
+          <td>President or Events Chair</td>
+          <td>Campus email list</td>
+          <td><span class="status-dot dot-todo"></span>To research</td>
+        </tr>
+        <tr>
+          <td><strong>Korean Student Association</strong></td>
+          <td>UCLA / UC Berkeley</td>
+          <td>Cultural org</td>
+          <td>Culture Chair or Treasurer</td>
+          <td>Instagram DM</td>
+          <td><span class="status-dot dot-todo"></span>To research</td>
+        </tr>
+        <tr>
+          <td style="color: var(--ink-faint); font-style: italic;" colspan="6">+ 16 more rows to be populated Thursday during chapter mapping session</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top: 1rem; background: var(--green-faint); border-color: var(--green-pale);">
+    <div class="card-header"><div class="card-icon">🔍</div><h3>How to find chapter contacts Thursday</h3></div>
+    <div class="two-col">
+      <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.9;">
+        <li>· University Panhellenic Council websites list all chapters</li>
+        <li>· Search "[university] [sorority name] president instagram"</li>
+        <li>· LinkedIn: search "[chapter name] treasurer"</li>
+        <li>· r/[university] subreddits often have org reps</li>
+      </ul>
+      <ul style="list-style: none; font-size: 12.5px; color: var(--ink-mid); line-height: 1.9;">
+        <li>· University student orgs directory (usually .edu/orgs)</li>
+        <li>· Greek Life office contact pages</li>
+        <li>· @mention the chapter on Twitter/X</li>
+        <li>· Use mutual connections on LinkedIn</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     TAB 4 · OUTREACH TEMPLATES
+═══════════════════════════════════════ -->
+<section class="section" id="outreach">
+  <div class="section-header">
+    <div class="day-badge">THU · Jun 19</div>
+    <div>
+      <h2>Outreach Templates</h2>
+      <p>Three templates for different channels and audiences. Keep it short, personal, and low-ask.</p>
+    </div>
+  </div>
+
+  <div class="tip-row"><div class="tip-num">!</div><div class="tip-text"><strong>Golden rule of cold outreach:</strong> The first message should ask for nothing except 30 minutes of their time, in exchange for something (gift card). Never explain the whole product. Never say "app" or "platform" in the first message — say "research conversation."</div></div>
+
+  <hr class="divider">
+
+  <!-- TEMPLATE 1 -->
+  <div class="template-box">
+    <div class="template-meta">
+      <div class="template-meta-left">Template A · Email — Chapter President or Officer</div>
+      <div class="template-meta-right">use for: exec officers · length: ~120 words</div>
+    </div>
+    <div class="template-field">
+      <div class="field-label">To</div>
+      <div class="field-value"><span class="template-var">[First name]</span>, Chapter President / Treasurer / VP, <span class="template-var">[Chapter name]</span></div>
+    </div>
+    <div class="template-field">
+      <div class="field-label">Subject</div>
+      <div class="field-value">Quick question about how <span class="template-var">[Chapter name]</span> handles chapter finances — 30 min?</div>
+    </div>
+    <div class="template-body">Hi <span class="template-var">[First name]</span>,
+
+I'm <span class="template-var">[Your name]</span>, doing research on how sorority chapters manage shared expenses, resources, and informal trading between members.
+
+I'd love to ask you a few questions — nothing to prepare, just a conversation. It's genuinely useful to hear from someone who runs chapter operations firsthand.
+
+It would take about 30–45 minutes over Zoom, at whatever time works for you. As a thank you, we'll send a $20 Amazon gift card after we chat.
+
+Would you be open to connecting this week or next?
+
+Thanks so much,
+<span class="template-var">[Your name]</span>
+<span class="template-var">[Your email]</span></div>
+  </div>
+
+  <!-- TEMPLATE 2 -->
+  <div class="template-box">
+    <div class="template-meta">
+      <div class="template-meta-left">Template B · Instagram DM — General Member</div>
+      <div class="template-meta-right">use for: members · length: ~60 words · very casual</div>
+    </div>
+    <div class="template-field">
+      <div class="field-label">To</div>
+      <div class="field-value">Active member found via chapter Instagram page</div>
+    </div>
+    <div class="template-body">Hey <span class="template-var">[First name]</span>! I'm doing research on how sorority sisters share, trade, and split costs with each other — stuff like who pays for what, how you handle formals, that kind of thing.
+
+Would you be open to a 30-min Zoom call? Happy to send a $15 gift card as a thank you 🙏
+
+Totally casual, no prep needed. DM me back or I can send over a scheduling link!</div>
+  </div>
+
+  <!-- TEMPLATE 3 -->
+  <div class="template-box">
+    <div class="template-meta">
+      <div class="template-meta-left">Template C · Email — Student Org President (non-sorority)</div>
+      <div class="template-meta-right">use for: clubs, cultural orgs, pre-professional · ~100 words</div>
+    </div>
+    <div class="template-field">
+      <div class="field-label">To</div>
+      <div class="field-value">President / Treasurer of <span class="template-var">[Org name]</span></div>
+    </div>
+    <div class="template-field">
+      <div class="field-label">Subject</div>
+      <div class="field-value">Research on how student orgs manage money + resources — interested in talking?</div>
+    </div>
+    <div class="template-body">Hi <span class="template-var">[First name]</span>,
+
+I'm researching how student organizations like <span class="template-var">[Org name]</span> handle the financial and logistical side of running a group — things like dues, shared costs, gear, and how members help each other out informally.
+
+I'd love to chat with you for 30–45 minutes over Zoom. There's nothing to prepare — just a conversation about how things work in your org. We'll send a $20 gift card as a thank you.
+
+Does any time this week or next work for you?
+
+Best,
+<span class="template-var">[Your name]</span></div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="q-group-title" style="margin-bottom: 1rem;">Outreach strategy & timing</div>
+  <div class="tip-row"><div class="tip-num">1</div><div class="tip-text"><strong>Send Tuesday–Wednesday, 10am–2pm local time.</strong> Emails sent in this window get ~40% higher open rates for students than evenings or weekends.</div></div>
+  <div class="tip-row"><div class="tip-num">2</div><div class="tip-text"><strong>Personalize the first sentence.</strong> Mention something real about the chapter — a recent philanthropy event, their Instagram bio, a mutual connection. Even one line of personalization doubles response rates.</div></div>
+  <div class="tip-row"><div class="tip-num">3</div><div class="tip-text"><strong>Follow up once, 4–5 days later.</strong> Keep it short: "Hey — just wanted to bump this in case it got buried. Still happy to chat if timing works!" Don't follow up a third time.</div></div>
+  <div class="tip-row"><div class="tip-num">4</div><div class="tip-text"><strong>Ask for a referral in every session.</strong> "Is there anyone else in your chapter — or another chapter — I should talk to?" Snowball sampling is the fastest way to fill your interview slots in a trust-based community.</div></div>
+  <div class="tip-row"><div class="tip-num">5</div><div class="tip-text"><strong>Target: 20 outreach contacts → 8–12 interviews</strong> by end of Week 2. That's a realistic ~40–50% response rate for a warm, personalized, gift-card-incentivized ask.</div></div>
+</section>
+
+</main>
+
+<footer>
+  Cashaey · Research Foundation · Week 1 · Jun 15–19 &nbsp;·&nbsp; All content is internal working draft
+</footer>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
